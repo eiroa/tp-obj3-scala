@@ -7,7 +7,7 @@ import mixines.EntidadConRegistros
 
 
 
-class Departamento(val nombre:String, val provincia:Provincia) extends EntidadConRegistros{
+class Departamento(val nombre:String, val provincia:Provincia, var grupo:GrupoDepartamento = null) extends EntidadConRegistros{
   
     override def toString() = "departamento (" + this.nombre  + ")"
     

@@ -1,11 +1,13 @@
 package entities
 
 import scala.collection.mutable.MutableList
+
 import mixines.EntidadConRegistros
 
 class Provincia(val nombre:String) extends EntidadConRegistros{
   val registros = new MutableList[Registro]
   val departamentos = new MutableList[Departamento]
+  var fuenteResponsable:Fuente = null
   
   def obtenerMontoTotalVentasDeEmpresasSegunAnio(anio:Int) = 
 	    this.registros.filter(_.anio.==(anio)).foldRight(0){(b:Registro,a:Int) =>   a + b.montoVentas }

@@ -9,7 +9,13 @@ import scala.collection.mutable.MutableList
 import entities.Registro
 
 class CensoDao extends AbstractDao[Censo] {
-  
+	
+	def saveAndSetSourceToRegisters(censo:Censo) = {
+	  this.elements.+=(censo)
+	  censo.registros.map(_.setFuente(censo.fuente))
+	}
+	  
+	  
 
 	def getElements():MutableList[Censo] ={
 	  return this.elements 

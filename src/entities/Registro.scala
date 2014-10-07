@@ -5,10 +5,12 @@ import java.util.Calendar
 
 class Registro ( 
     val anio:Int,val empresa:Empresa = null,val provincia:Provincia = null, val departamento:Departamento = null,
-    val montoVentas:Int=0,val montoGanancia:Int=0){
+    val montoVentas:Int=0,val montoGanancia:Int=0,var fuente:Fuente=null){
   
   val fechaDeActualizacion:Calendar = Calendar.getInstance()
   fechaDeActualizacion.setTime(new Date())
+  
+  def setFuente(fuente:Fuente) = this.fuente = fuente
   
   def tasaDeGanancia()  = this.montoGanancia.toFloat /this.montoVentas.toFloat *100
 

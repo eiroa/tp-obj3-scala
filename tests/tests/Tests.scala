@@ -691,17 +691,7 @@ class Tests {
    empresaDao.save(ushuaia1)
    
    
-   //provincias
-//   provinciaDao.save(baires)
-//   provinciaDao.save(entrerios )
-//   provinciaDao.save(santaFe )
-//   provinciaDao.save(mendoza )
-//   provinciaDao.save(tierraDelFuego )
-   provinciaDao.saveAndIncludeRegisters(baires, registroDao)
-   provinciaDao.saveAndIncludeRegisters(entrerios , registroDao)
-   provinciaDao.saveAndIncludeRegisters(santaFe , registroDao)
-   provinciaDao.saveAndIncludeRegisters(mendoza , registroDao)
-   provinciaDao.saveAndIncludeRegisters(tierraDelFuego , registroDao)
+
    
    //dptos
    departamentoDao.save(avellaneda )
@@ -732,39 +722,51 @@ class Tests {
    
    
    //censos
-   censoDao.save(c2012Avellaneda )
-   censoDao.save(c2013Avellaneda )
-   censoDao.save(c2014Avellaneda )
-   censoDao.save(c2012Quilmes )
-   censoDao.save(c2013Quilmes)
-   censoDao.save(c2014Quilmes )
-   censoDao.save(c2012Tigre )
-   censoDao.save(c2013Tigre )
-   censoDao.save(c2014Tigre )
-   censoDao.save(c2012Mdq )
-   censoDao.save(c2013Mdq)
-   censoDao.save(c2014Mdq)
-   censoDao.save(c2012BahiaBlanca )
-   censoDao.save(c2013BahiaBlanca)
-   censoDao.save(c2014BahiaBlanca)
+   censoDao.saveAndSetSourceToRegisters(c2012Avellaneda )
+   censoDao.saveAndSetSourceToRegisters(c2013Avellaneda )
+   censoDao.saveAndSetSourceToRegisters(c2014Avellaneda )
+   censoDao.saveAndSetSourceToRegisters(c2012Quilmes )
+   censoDao.saveAndSetSourceToRegisters(c2013Quilmes)
+   censoDao.saveAndSetSourceToRegisters(c2014Quilmes )
+   censoDao.saveAndSetSourceToRegisters(c2012Tigre )
+   censoDao.saveAndSetSourceToRegisters(c2013Tigre )
+   censoDao.saveAndSetSourceToRegisters(c2014Tigre )
+   censoDao.saveAndSetSourceToRegisters(c2012Mdq )
+   censoDao.saveAndSetSourceToRegisters(c2013Mdq)
+   censoDao.saveAndSetSourceToRegisters(c2014Mdq)
+   censoDao.saveAndSetSourceToRegisters(c2012BahiaBlanca )
+   censoDao.saveAndSetSourceToRegisters(c2013BahiaBlanca)
+   censoDao.saveAndSetSourceToRegisters(c2014BahiaBlanca)
    
-   censoDao.save(c2014Parana)
-   censoDao.save(c2013Parana)
-   censoDao.save(c2014Colon)
-   censoDao.save(c2013Colon)
+   censoDao.saveAndSetSourceToRegisters(c2014Parana)
+   censoDao.saveAndSetSourceToRegisters(c2013Parana)
+   censoDao.saveAndSetSourceToRegisters(c2014Colon)
+   censoDao.saveAndSetSourceToRegisters(c2013Colon)
    
-   censoDao.save(c2014Rosario )
-   censoDao.save(c2013Rosario)
+   censoDao.saveAndSetSourceToRegisters(c2014Rosario )
+   censoDao.saveAndSetSourceToRegisters(c2013Rosario)
    
-   censoDao.save(c2014MendozaCapital )
-   censoDao.save(c2013MendozaCapital )
-   censoDao.save(c2014SanRafael )
-   censoDao.save(c2013SanRafael )
+   censoDao.saveAndSetSourceToRegisters(c2014MendozaCapital )
+   censoDao.saveAndSetSourceToRegisters(c2013MendozaCapital )
+   censoDao.saveAndSetSourceToRegisters(c2014SanRafael )
+   censoDao.saveAndSetSourceToRegisters(c2013SanRafael )
    
-   censoDao.save(c2014RioGrande )
-   censoDao.save(c2013RioGrande )
-   censoDao.save(c2014Ushuaia )
-   censoDao.save(c2013Ushuaia )
+   censoDao.saveAndSetSourceToRegisters(c2014RioGrande )
+   censoDao.saveAndSetSourceToRegisters(c2013RioGrande )
+   censoDao.saveAndSetSourceToRegisters(c2014Ushuaia )
+   censoDao.saveAndSetSourceToRegisters(c2013Ushuaia )
+   
+      //provincias
+//   provinciaDao.save(baires)
+//   provinciaDao.save(entrerios )
+//   provinciaDao.save(santaFe )
+//   provinciaDao.save(mendoza )
+//   provinciaDao.save(tierraDelFuego )
+   provinciaDao.saveAndIncludeRegisters(baires, registroDao)
+   provinciaDao.saveAndIncludeRegisters(entrerios , registroDao)
+   provinciaDao.saveAndIncludeRegisters(santaFe , registroDao)
+   provinciaDao.saveAndIncludeRegisters(mendoza , registroDao)
+   provinciaDao.saveAndIncludeRegisters(tierraDelFuego , registroDao)
 //   
 //   
    //registros
@@ -981,9 +983,16 @@ class Tests {
     }
 
     @Test def empresaConMayorGananciaEnAnioEnDepartamento(){
-      assertEquals(empresaDao.nombreEmpresaConMayorGananciaEnAnioYDepartamento(2012,mdq),"Empresa Mar del Plata 2")
+      assertEquals(departamentoDao.nombreEmpresaConMayorGananciaEnAnioYDepartamento(2014,avellaneda ),"Empresa Avellaneda 2")
     }
     
+    @Test def empresaConMayorGananciaEnAnioEnGrupo(){
+      assertEquals(grupoDao.nombreEmpresaConMayorGananciaEnAnioYGrupo(2014,zonasPortuarias ),"Empresa Rio Grande 3")
+    }
+    
+    @Test def empresaConMayorGananciaEnAnioDeFuente(){
+      assertEquals(fuenteDao.nombreEmpresaConMayorGananciaEnAnioYFuente(2014,flitoral ),"Empresa Rosario 1")
+    }    
     //Grupos
     
     @Test def homogeneidad(){

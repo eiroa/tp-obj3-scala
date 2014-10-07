@@ -12,6 +12,11 @@ class GrupoDepartamentoDao extends AbstractDao[GrupoDepartamento] {
 	def getElements():MutableList[GrupoDepartamento] ={
 	  return this.elements 
 	}
+	
+	def registrosDeGrupo(grupo:GrupoDepartamento)=  {
+	  this.getGrupoDepartamento(grupo).departamentos.foldRight(new MutableList[Registro])
+	  { (b: Departamento, a: MutableList[Registro]) => a.++=(b.registros)}
+	}
 
 	def getGrupoDepartamento(grupo:GrupoDepartamento):GrupoDepartamento = {
 	  return getElements.find(_.eq(grupo)).get	  
@@ -24,14 +29,16 @@ class GrupoDepartamentoDao extends AbstractDao[GrupoDepartamento] {
 	}
 	
    def registrosIdentificadosConVentasMayoresAEnGrupo(monto:Int,grupo:GrupoDepartamento):MutableList[Registro] ={
-	  return this.elements.filter(_.eq(grupo)).foldRight(new MutableList[Registro])
-	  { (b: GrupoDepartamento, a: MutableList[Registro]) => a.++=(b.registrosIdentificadosConVentasMayorA(monto))}
+	  return this.registrosDeGrupo(grupo).filter(x=> (x.esIdentificado && x.montoVentas > monto ) )
 	}  
 	
 	def generarListaConNombresDeEmpresasConVentasTotalesMayoresAEnGrupo(monto:Int,grupo:GrupoDepartamento) = {
 	  var result:ListSet[String] = new ListSet[String]
 	  result.++(this.registrosIdentificadosConVentasMayoresAEnGrupo(monto,grupo).map{_.empresa.nombre})
 	}
+	
+	def nombreEmpresaConMayorGananciaEnAnioYGrupo(anio:Int,grupo:GrupoDepartamento) =
+	  this.registrosDeGrupo(grupo).filter(x=> (x.esIdentificado && x.anio==(anio))).maxBy(_.montoGanancia).empresa.nombre 
 	
 
 	  

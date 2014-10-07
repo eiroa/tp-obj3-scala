@@ -39,6 +39,8 @@ class FuenteDao extends AbstractDao[Fuente]{
 	  return getElements.find(_.eq(fuente)).get	  
 	}
 	
+	def registrosDeFuente(fuente:Fuente) = this.getFuente(fuente).registros
+	
 	def generarMapaEmpresaMontoVentaTotalPorAnioYFuente(anio:Int) = {
 	  this.elements.filter(_.tieneRegistrosEnAnio(anio)).
 	  	foldRight(new HashMap[Fuente, Int]) { (b: Fuente, a: HashMap[Fuente, Int]) => 
@@ -46,8 +48,7 @@ class FuenteDao extends AbstractDao[Fuente]{
 	}
 	
 	def registrosIdentificadosConVentasMayoresADeFuente(monto:Int,fuente:Fuente):MutableList[Registro] ={
-	  return this.elements.filter(_.eq(fuente)).foldRight(new MutableList[Registro])
-	  { (b: Fuente, a: MutableList[Registro]) => a.++=(b.registrosIdentificadosConVentasMayorA(monto))}
+	  return this.registrosDeFuente(fuente).filter(x=> (x.esIdentificado && x.montoVentas > monto))
 	}  
 	
 	
@@ -55,6 +56,10 @@ class FuenteDao extends AbstractDao[Fuente]{
 	  var result:ListSet[String] = new ListSet[String]
 	  result.++(this.registrosIdentificadosConVentasMayoresADeFuente(monto,fuente).map{_.empresa.nombre})
 	} 
+	
+	def nombreEmpresaConMayorGananciaEnAnioYFuente(anio:Int,fuente:Fuente) = 
+      this.registrosDeFuente(fuente).filter(x=> (x.esIdentificado && x.anio==(anio))).maxBy(_.montoGanancia).empresa.nombre   
+	
 	
 
 }

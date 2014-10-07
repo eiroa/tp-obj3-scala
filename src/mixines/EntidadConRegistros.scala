@@ -4,6 +4,7 @@ import scala.collection.mutable.MutableList
 import entities.Registro
 
 trait EntidadConRegistros {
+  
 	
 	def registros():MutableList[Registro]
   
