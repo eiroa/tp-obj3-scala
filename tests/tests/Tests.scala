@@ -796,6 +796,9 @@ class Tests {
 //   println(provinciaDao.registrosIdentificadosConVentasMayoresA(50000))
 //   println(provinciaDao.generarListaConNombresDeEmpresasConVentasTotalesMayoresA(1))
 //   println(mdq1.aniosConVentasMayorA(35000))
+//   println(empresaDao.empresasConRegistrosEnAnios(2012,2013,2014))
+//   println(mdq1.registrosDeAnios(2012,2013,2014))
+//   println(mdq1.obtenerMontoVentasTotalEnAnios(mdq1.registrosDeAnios(2012,2013,2014)))
    //Assert
    ///////////////////////
    //Parte 1 del TP
@@ -1033,6 +1036,14 @@ class Tests {
     //Registro con anio de obtencion igual al anio que hace referencia el registro
     @Test def esConsistente3(){
       assertEquals(r2c12012Avellaneda .esConsistenteMixin,false)
+    }
+    
+    @Test def ventasEnAnios(){
+      assertEquals(mdq1.obtenerMontoVentasTotalEnAnios(mdq1.registrosDeAnios(2012,2013,2014)),125000)
+    }
+    
+    @Test def ganaciaEnAnios(){
+      assertEquals(mdq1.obtenerMontoGananciasTotalEnAnios(mdq1.registrosDeAnios(2012,2013,2014)),63000)
     }
     
     

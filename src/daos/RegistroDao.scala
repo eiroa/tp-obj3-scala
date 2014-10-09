@@ -6,8 +6,12 @@ import scala.collection.mutable.MutableList
 import entities.Provincia
 import entities.Departamento
 import entities.GrupoDepartamento
+import mixines.EntidadConRegistros
 
-class RegistroDao extends AbstractDao[Registro]{	
+class RegistroDao extends AbstractDao[Registro] with EntidadConRegistros{	
+	
+    def registros = this.elements 
+	
 	def cantidadDeRegistrosTotalesConVentasMayorA(monto:Int) = 
 	  this.elements.count(_.montoVentas > monto)
 	

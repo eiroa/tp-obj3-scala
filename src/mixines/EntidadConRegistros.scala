@@ -26,5 +26,21 @@ trait EntidadConRegistros {
     
     def aniosConTasaDeGananciaMayorA(monto:Int)= this.registros.filter(_.tasaDeGanancia > monto).map(_.anio)
     
-	
+	def registrosIdentificadosDeAnios(anios:Int*) = {
+      var result:MutableList[Registro] = registrosIdentificados
+      var aniosABuscar:MutableList[Int]= new MutableList[Int]
+      for( anioActual <- anios ){
+        aniosABuscar.+=(anioActual)
+      }
+      result.filter(x => (aniosABuscar.contains(x.anio)))
+    }
+    
+    def registrosDeAnios(anios:Int*) = {
+      var result:MutableList[Registro] = new MutableList[Registro]
+      
+      for( anioActual <- anios ){
+         result.++=(registros.filter(_.anio.==(anioActual)))
+      }
+      result
+    }
 }

@@ -33,6 +33,12 @@ class Empresa(val nombre: String, val provincia:Provincia,
   def obtenerMontoVentasTotal()  =  
     this.registros.foldRight(0){(b:Registro,a:Int) =>   a + b.montoVentas }
 	
+  def obtenerMontoVentasTotalEnAnios(regs:MutableList[Registro])  =  
+    regs.foldRight(0){(b:Registro,a:Int) =>   a + b.montoVentas  }
+  
+  def obtenerMontoGananciasTotalEnAnios(regs:MutableList[Registro])  =  
+    regs.foldRight(0){(b:Registro,a:Int) =>   a + b.montoGanancia  }
+	
   def obtenerMontoGanaciaTotal() = 
     this.registros.foldRight(0){(b:Registro,a:Int) =>   a + b.montoGanancia  }
   
