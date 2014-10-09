@@ -762,11 +762,16 @@ class Tests {
 //   provinciaDao.save(santaFe )
 //   provinciaDao.save(mendoza )
 //   provinciaDao.save(tierraDelFuego )
+   r2c12012Avellaneda.anioDeObtencionDeDatos = 2012
+   r4c12012Avellaneda.fuente = flitoral 
+   //
    provinciaDao.saveAndIncludeRegisters(baires, registroDao)
    provinciaDao.saveAndIncludeRegisters(entrerios , registroDao)
    provinciaDao.saveAndIncludeRegisters(santaFe , registroDao)
    provinciaDao.saveAndIncludeRegisters(mendoza , registroDao)
    provinciaDao.saveAndIncludeRegisters(tierraDelFuego , registroDao)
+   
+   
 //   
 //   
    //registros
@@ -790,6 +795,7 @@ class Tests {
 //   println(baires.registrosIdentificadosConVentasMayorA(50000))
 //   println(provinciaDao.registrosIdentificadosConVentasMayoresA(50000))
 //   println(provinciaDao.generarListaConNombresDeEmpresasConVentasTotalesMayoresA(1))
+//   println(mdq1.aniosConVentasMayorA(35000))
    //Assert
    ///////////////////////
    //Parte 1 del TP
@@ -1016,7 +1022,17 @@ class Tests {
     
     
     @Test def esConsistente(){
-      assertEquals(r1c12012Avellaneda .esConsistente,true)
+      assertEquals(r1c12012Avellaneda .esConsistenteMixin,true)
+    }
+    
+    // Registro de buenos aires con fuente del litoral
+    @Test def esConsistente2(){
+      assertEquals(r4c12012Avellaneda .esConsistenteMixin,false)
+    }
+    
+    //Registro con anio de obtencion igual al anio que hace referencia el registro
+    @Test def esConsistente3(){
+      assertEquals(r2c12012Avellaneda .esConsistenteMixin,false)
     }
     
     
