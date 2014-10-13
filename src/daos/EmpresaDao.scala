@@ -19,7 +19,7 @@ class EmpresaDao extends AbstractDao[Empresa]() with EntidadConRegistros{
 	  
 	}
    	def empresasConRegistrosEnAnios(anios:Int*) = {
-      var result:MutableList[Empresa] = new MutableList[Empresa]
+      var result = new MutableList[Empresa]
       for( anioActual <- anios ){
         result.++=(this.elements.filter(_.tieneRegistrosEnAnio(anioActual)))
       }
@@ -42,5 +42,13 @@ class EmpresaDao extends AbstractDao[Empresa]() with EntidadConRegistros{
 	def nombreEmpresaConMayorGananciaEnAnioYDepartamento(anio:Int,dpto:Departamento) =
 	  elements.filter(_.departamento.eq(dpto)).maxBy(_.obtenerMontoGananciasEnAnio(anio)).nombre  
 	
+	
+	  //Parte 3
+	  
+	def generarListaConNombresDeEmpresasConVentasTotalesMayoresAEnAnios(monto:Int,anios:Int*) = 
+	  this.elements.filter(_.obtenerMontoVentasTotalEnAnios(anios:_*) > monto).map{_.nombre }  
+	
+	def nombreEmpresaConMayorGananciaEnAnios(anios:Int*) = 
+	  elements.maxBy(_.obtenerMontoGananciasTotalEnAnios(anios:_*)).nombre
 	
 }

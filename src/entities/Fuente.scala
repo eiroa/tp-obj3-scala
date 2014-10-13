@@ -27,7 +27,7 @@ extends EntidadConRegistros{
 
 	
     
-    def registrosDeAnio(anio:Int): MutableList[Registro] = {
+    override def registrosDeAnio(anio:Int): MutableList[Registro] = {
       return this.obtenerCensosDeAnio(anio).
       foldRight(new MutableList[Registro]){(b:Censo,a:MutableList[Registro]) =>   a.++=(b.registros ) }	
     }

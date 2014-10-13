@@ -677,6 +677,7 @@ class Tests {
    empresaDao.save(bb1)
    empresaDao.save(mdq1)
    empresaDao.save(mdq2)
+   empresaDao.save(mdq3)
    empresaDao.save(rosario1)
    empresaDao.save(rosario2)
    empresaDao.save(colon1)
@@ -773,10 +774,7 @@ class Tests {
    
    
 //   
-//   
-   //registros
-   
-//Ya incluidos mediante provincia dao
+//Prints para mostrar resultados
    
 //   println(registroDao.elements.size)
 //   println(empresaDao.nombreEmpresaConMayorGananciaEnAnio(2014))
@@ -799,6 +797,8 @@ class Tests {
 //   println(empresaDao.empresasConRegistrosEnAnios(2012,2013,2014))
 //   println(mdq1.registrosDeAnios(2012,2013,2014))
 //   println(mdq1.obtenerMontoVentasTotalEnAnios(mdq1.registrosDeAnios(2012,2013,2014)))
+//   println(registroDao.registrosConVentasMayoresAEnAnios(1, 2012))
+//   println(provinciaDao.generarMapaEmpresaMontoVentaTotalPorAnios(2012,2013,2014))
    //Assert
    ///////////////////////
    //Parte 1 del TP
@@ -988,7 +988,7 @@ class Tests {
     
     //EmpresaNombre
     @Test def empresaConMayorGananciaEnAnioEnProvincia(){
-      assertEquals(empresaDao.nombreEmpresaConMayorGananciaEnAnioYProvincia(2014,baires),"Empresa Avellaneda 2")
+      assertEquals(empresaDao.nombreEmpresaConMayorGananciaEnAnioYProvincia(2014,baires),"Empresa Mar del Plata 3")
     }
 
     @Test def empresaConMayorGananciaEnAnioEnDepartamento(){
@@ -1039,18 +1039,89 @@ class Tests {
     }
     
     @Test def ventasEnAnios(){
-      assertEquals(mdq1.obtenerMontoVentasTotalEnAnios(mdq1.registrosDeAnios(2012,2013,2014)),125000)
+      assertEquals(mdq1.obtenerMontoVentasTotalEnAnios(2012,2013,2014),125000)
     }
     
     @Test def ganaciaEnAnios(){
-      assertEquals(mdq1.obtenerMontoGananciasTotalEnAnios(mdq1.registrosDeAnios(2012,2013,2014)),63000)
+      assertEquals(mdq1.obtenerMontoGananciasTotalEnAnios(2012,2013,2014),63000)
+    }
+    
+    @Test def registrosDe2012MayorA1DeVentas(){
+      assertEquals(registroDao.registrosConVentasMayoresAEnAnios(1, 2012),24)
+    }
+    
+    @Test def registrosDe2012y2013y2014y2015MayorA1DeVentas(){
+      assertEquals(registroDao.registrosConVentasMayoresAEnAnios(1, 2012,2013,2014,2015),132)
+    }
+    
+    @Test def registrosDe2014MayorA100000DeVentas(){
+      assertEquals(registroDao.registrosConVentasMayoresAEnAnios(100000, 2014),3)
+    }
+    
+    @Test def registrosDe2012MayorA1DeGanacia(){
+      assertEquals(registroDao.registrosConGananciasMayoresAEnAnios(1, 2012),23)
+    }
+    
+    @Test def registrosDe2012y2013y2014y2015MayorA1DeGanancias(){
+      assertEquals(registroDao.registrosConGananciasMayoresAEnAnios(1, 2012,2013,2014,2015),131)
+    }
+    
+    @Test def registrosDe2014MayorA100DeGanancias(){
+      assertEquals(registroDao.registrosConGananciasMayoresAEnAnios(100000, 2014),2)
+    }
+    
+    @Test def registrosDe2012MayorA1DeTasaDeGanacia(){
+      assertEquals(registroDao.registrosConTasaDeGananciaMayorAEnAnios(1, 2012),23)
+    }
+    
+    @Test def registrosDe2012y2013y2014y2015MayorA1DeTasaGanancias(){
+      assertEquals(registroDao.registrosConTasaDeGananciaMayorAEnAnios(1, 2012,2013,2014,2015),131)
+    }
+    
+    @Test def registrosDe2014MayorA100DeTasaGanancias(){
+      assertEquals(registroDao.registrosConTasaDeGananciaMayorAEnAnios(100, 2014),2)
+    }
+    
+    @Test def mapaProvinciaPorVentas1(){
+      assertEquals(provinciaDao.generarMapaEmpresaMontoVentaTotalPorAnios(2012).size,1)
+    }
+    
+    @Test def mapaProvinciaPorVentas2(){
+      assertEquals(provinciaDao.generarMapaEmpresaMontoVentaTotalPorAnios(2012,2013,2014,2015).size,5)
+    }
+    
+    @Test def mapaProvinciaPorVentas3(){
+      assertEquals(provinciaDao.generarMapaEmpresaMontoVentaTotalPorAnios(2012,2013,2014,2015).filter(_._1.==(4070000)).toParArray.head._2.head ,baires)
+    }
+    
+    
+    @Test def nombreDeEmpresasCuyasVentasSuperenUnMontoEnAnios1(){
+      assertEquals(empresaDao.generarListaConNombresDeEmpresasConVentasTotalesMayoresAEnAnios(150000,2012,2013,2014).head,"Empresa Rosario 1")
+    }
+    
+    @Test def nombreDeEmpresasCuyasVentasSuperenUnMontoEnAnios2(){
+      assertEquals(empresaDao.generarListaConNombresDeEmpresasConVentasTotalesMayoresAEnAnios(1,2012,2013,2014).size,22)
+    }
+    
+    @Test def fuentesQueAportaronAlMenosUnRegistroEnAnios1(){
+      assertEquals(fuenteDao.fuentesConRegistrosEnAnios(2012).size,1)
+    }
+    
+    @Test def fuentesQueAportaronAlMenosUnRegistroEnAnios2(){
+      assertEquals(fuenteDao.fuentesConRegistrosEnAnios(2012,2013,2014,2035).size,4)
+    }
+    
+    @Test def empresaConMayorGananciaEnAnios1(){
+      assertEquals(empresaDao.nombreEmpresaConMayorGananciaEnAnios(2012),"Empresa Mar del Plata 3")
+    }
+    
+    @Test def empresaConMayorGananciaEnAnios2(){
+      assertEquals(empresaDao.nombreEmpresaConMayorGananciaEnAnios(2013,2014),"Empresa Rio Grande 3")
+    }
+    
+    @Test def empresaConMayorGananciaEnAnios3(){
+      assertEquals(empresaDao.nombreEmpresaConMayorGananciaEnAnios(2013,2014,2012,1980),"Empresa Mar del Plata 3")
     }
     
     
 }
-
-
-//@RunWith(classOf[JUnitRunner])
-//class TotalVentasTest extends FlatSpec with ShouldMatchers {
-//
-//}

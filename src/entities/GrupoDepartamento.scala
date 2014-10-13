@@ -22,9 +22,7 @@ class GrupoDepartamento(val nombreGrupo:String) extends EntidadConRegistros{
     }
 	
     
-    def registrosDeAnio(anio:Int): MutableList[Registro] = {
-      return this.registros.filter(x =>(x.anio==anio) )
-    }
+
 
     
     def obtenerMontoTotalVentasDeEmpresasSegunAnio(anio:Int) = 

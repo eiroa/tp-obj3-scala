@@ -13,6 +13,13 @@ class Provincia(val nombre:String) extends EntidadConRegistros{
 	    this.registros.filter(_.anio.==(anio)).foldRight(0){(b:Registro,a:Int) =>   a + b.montoVentas }
   
   
+  def obtenerMontoTotalVentasDeEmpresasSegunAnios(anios:Int*) = {
+		var result = 0
+		for(anioActual <- anios){
+		  result = result +obtenerMontoTotalVentasDeEmpresasSegunAnio(anioActual)
+		}
+		result
+  }
   override def toString() = {
     "Provincia (" + this.nombre  + ")"
   }

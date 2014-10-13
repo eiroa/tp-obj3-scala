@@ -19,6 +19,14 @@ class FuenteDao extends AbstractDao[Fuente]{
 	  return this.elements.filter(_.censos contains(anio))
 	}
 	
+	def fuentesConRegistrosEnAnios(anios:Int*) = {
+	  var result:ListSet[Fuente] = new ListSet[Fuente]
+	  for(anioActual <- anios){
+	    result.++=(fuentesConRegistrosEnAnio(anioActual))
+	  }
+	  result
+	}
+	
 	def fuentesConRegistrosEnAnioYProvincia(anio:Int,prov:Provincia) : MutableList[Fuente] = {
 	  return this.fuentesConRegistrosEnAnio(anio).filter(_.tieneRegistrosEnProvincia(prov))
 	}

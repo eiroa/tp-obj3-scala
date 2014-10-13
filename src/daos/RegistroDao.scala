@@ -52,5 +52,30 @@ class RegistroDao extends AbstractDao[Registro] with EntidadConRegistros{
 	def cantidadDeRegistrosGrupoConTasaDeGananciaMayorA(tasa:Int, grupo:GrupoDepartamento) =
 	  this.elements.count( x => (x.tasaDeGanancia >tasa && (grupo.departamentos.contains(x.departamento))))
 	  
+	
+	def registrosConVentasMayoresAEnAnios(monto:Int, anios:Int*) = {
+      var result:Int = 0
+      for( anioActual <- anios ){
+        result = result + (this.elements.count(x => (x.anio.==(anioActual)&& x.montoVentas>monto )))
+      }
+      result
+    }
+    
+    def registrosConGananciasMayoresAEnAnios(monto:Int, anios:Int*) = {
+      var result:Int = 0
+      for( anioActual <- anios ){
+        result = result + (this.elements.count(x => (x.anio.==(anioActual)&& x.montoGanancia >monto )))
+      }
+      result
+    }
+    
+    def registrosConTasaDeGananciaMayorAEnAnios(monto:Int, anios:Int*) = {
+      var result:Int = 0
+      for( anioActual <- anios ){
+        result = result + (this.elements.count(x => (x.anio.==(anioActual)&& x.tasaDeGanancia >monto )))
+      }
+      result
+    }
+	  
 	  
 }

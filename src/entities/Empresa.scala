@@ -33,16 +33,31 @@ class Empresa(val nombre: String, val provincia:Provincia,
   def obtenerMontoVentasTotal()  =  
     this.registros.foldRight(0){(b:Registro,a:Int) =>   a + b.montoVentas }
 	
-  def obtenerMontoVentasTotalEnAnios(regs:MutableList[Registro])  =  
-    regs.foldRight(0){(b:Registro,a:Int) =>   a + b.montoVentas  }
+  def obtenerMontoVentasTotalEnAnios(anios:Int*)  =  {
+    var result = 0
+      for( anioActual <- anios ){
+         result = result + (this.obtenerMontoVentasEnAnio(anioActual))
+      }
+      result
+    
+  }
   
-  def obtenerMontoGananciasTotalEnAnios(regs:MutableList[Registro])  =  
-    regs.foldRight(0){(b:Registro,a:Int) =>   a + b.montoGanancia  }
-	
+  def obtenerMontoGananciasTotalEnAnios(anios:Int*)  =  {
+    var result = 0
+      for( anioActual <- anios ){
+         result = result + (this.obtenerMontoGananciasEnAnio(anioActual))
+      }
+      result
+  }
+  
   def obtenerMontoGanaciaTotal() = 
     this.registros.foldRight(0){(b:Registro,a:Int) =>   a + b.montoGanancia  }
   
   def obtenerTasaDeGanaciaTotal() = (this.obtenerMontoGanaciaTotal * 100 )/this.obtenerMontoVentasTotal
+  
+  def obtenerMontoVentasEnAnio(anio:Int) = 
+    this.registros.filter(_.anio.==(anio)).
+    foldRight(0){(b:Registro,a:Int) =>   a + b.montoVentas   }
 	
   def obtenerMontoGananciasEnAnio(anio:Int) = 
     this.registros.filter(_.anio.==(anio)).

@@ -32,15 +32,17 @@ class ProvinciaDao extends AbstractDao[Provincia]() {
 
   
     def generarMapaEmpresaMontoVentaTotalPorAnio(anio:Int) = 
-     this.elements.filter(_.tieneRegistrosEnAnio(anio)).
-     foldRight(new HashMap[Provincia, Int]) { (b: Provincia, a: HashMap[Provincia, Int]) => 
-     a.+=((b, b.obtenerMontoTotalVentasDeEmpresasSegunAnio(anio))) }
+     this.elements.filter(_.tieneRegistrosEnAnio(anio)).groupBy(_.obtenerMontoTotalVentasDeEmpresasSegunAnio(anio))
+//     foldRight(new HashMap[Provincia, Int]) { (b: Provincia, a: HashMap[Provincia, Int]) => 
+//     a.+=((b, b.obtenerMontoTotalVentasDeEmpresasSegunAnio(anio))) }
 	
 	
 	def registrosIdentificadosConVentasMayoresAEnProvincia(monto:Int,prov:Provincia):MutableList[Registro] ={
 	  return this.elements.filter(_.eq(prov)).foldRight(new MutableList[Registro])
 	  { (b: Provincia, a: MutableList[Registro]) => a.++=(b.registrosIdentificadosConVentasMayorA(monto))}
 	}  
+	
+	
 	
 	
 	
@@ -52,7 +54,8 @@ class ProvinciaDao extends AbstractDao[Provincia]() {
 	
 	  
  
-  
+    def generarMapaEmpresaMontoVentaTotalPorAnios(anios:Int*) = 
+     this.elements.filter(_.tieneRegistrosEnAnios(anios:_*)).groupBy(_.obtenerMontoTotalVentasDeEmpresasSegunAnios(anios:_*))
 
 	
 }

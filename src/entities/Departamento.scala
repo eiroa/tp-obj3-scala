@@ -16,9 +16,6 @@ class Departamento(val nombre:String, val provincia:Provincia, var grupo:GrupoDe
     }
     
     
-    def registrosDeAnio(anio:Int): MutableList[Registro] = {
-      return this.registros.filter(x =>( x.anio==anio) )
-    }
     
     def obtenerMontoTotalVentasDeEmpresasSegunAnio(anio:Int) = 
 	    this.registrosDeAnio(anio).foldRight(0){(b:Registro,a:Int) =>   a + b.montoVentas }
