@@ -799,6 +799,7 @@ class Tests {
 //   println(mdq1.obtenerMontoVentasTotalEnAnios(mdq1.registrosDeAnios(2012,2013,2014)))
 //   println(registroDao.registrosConVentasMayoresAEnAnios(1, 2012))
 //   println(provinciaDao.generarMapaEmpresaMontoVentaTotalPorAnios(2012,2013,2014))
+//   println(mdq1.obtenerMontoVentasPromedioTotalEnAnios(2012,2013,2014))
    //Assert
    ///////////////////////
    //Parte 1 del TP
@@ -1038,6 +1039,8 @@ class Tests {
       assertEquals(r2c12012Avellaneda .esConsistenteMixin,false)
     }
     
+    //Datos para varios años
+    
     @Test def ventasEnAnios(){
       assertEquals(mdq1.obtenerMontoVentasTotalEnAnios(2012,2013,2014),125000)
     }
@@ -1091,7 +1094,7 @@ class Tests {
     }
     
     @Test def mapaProvinciaPorVentas3(){
-      assertEquals(provinciaDao.generarMapaEmpresaMontoVentaTotalPorAnios(2012,2013,2014,2015).filter(_._1.==(4070000)).toParArray.head._2.head ,baires)
+      assertEquals(provinciaDao.generarMapaEmpresaMontoVentaTotalPorAnios(2012,2013,2014,2015).filter(_._1.==(4070000)).head._2.head ,baires)
     }
     
     
@@ -1121,6 +1124,57 @@ class Tests {
     
     @Test def empresaConMayorGananciaEnAnios3(){
       assertEquals(empresaDao.nombreEmpresaConMayorGananciaEnAnios(2013,2014,2012,1980),"Empresa Mar del Plata 3")
+    }
+    
+    //Datos para promedios en años
+    
+    
+    @Test def ventasPromedioEnAnios(){
+      assertEquals(mdq1.obtenerMontoVentasPromedioTotalEnAnios(2012,2013,2014),41666)
+    }
+    
+    @Test def gananciasPromedioEnAnios(){
+      assertEquals(mdq1.obtenerMontoGananciasPromedioTotalEnAnios(2012,2013,2014),21000)
+    }
+    
+    @Test def tasaDeGananciaPromedioEnAnios(){
+      assertEquals(mdq1.obtenerTasaDeGananciaPromedioTotalEnAnios(2012,2013),50)
+    }
+
+    
+    @Test def mapaProvinciaPorPromedioVentas1(){
+      assertEquals(provinciaDao.generarMapaEmpresaMontoVentaPromedioTotalPorAnios(2012).size,1)
+    }
+    
+    @Test def mapaProvinciaPorPromedioVentas2(){
+      assertEquals(provinciaDao.generarMapaEmpresaMontoVentaPromedioTotalPorAnios(2012,2013,2014,2015).size,5)
+    }
+    
+    @Test def mapaProvinciaPorPromedioVentas3(){
+      assertEquals(provinciaDao.generarMapaEmpresaMontoVentaPromedioTotalPorAnios(2012,2013,2014,2015).filter(_._1.==(169583)).head._2.head ,baires)
+    }
+    
+    
+    @Test def nombreDeEmpresasCuyasVentasPromedioSuperenUnMontoEnAnios1(){
+      assertEquals(empresaDao.generarListaConNombresDeEmpresasConVentasPromedioTotalMayoresAEnAnios(50000,2012,2013,2014).head,"Empresa Rosario 1")
+    }
+    
+    @Test def nombreDeEmpresasCuyasVentasPromedioSuperenUnMontoEnAnios2(){
+      assertEquals(empresaDao.generarListaConNombresDeEmpresasConVentasPromedioTotalMayoresAEnAnios(1,2012,2013,2014).size,22)
+    }
+    
+
+    
+    @Test def empresaConMayorGananciaPromedioEnAnios1(){
+      assertEquals(empresaDao.nombreEmpresaConMayorGananciaPromedioEnAnios(2012),"Empresa Mar del Plata 3")
+    }
+    
+    @Test def empresaConMayorGananciaPromedioEnAnios2(){
+      assertEquals(empresaDao.nombreEmpresaConMayorGananciaPromedioEnAnios(2013,2014),"Empresa Rio Grande 3")
+    }
+    
+    @Test def empresaConMayorGananciaPromedioEnAnios3(){
+      assertEquals(empresaDao.nombreEmpresaConMayorGananciaPromedioEnAnios(2013,2014,2012,1980),"Empresa Mar del Plata 3")
     }
     
     

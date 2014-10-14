@@ -50,5 +50,10 @@ class EmpresaDao extends AbstractDao[Empresa]() with EntidadConRegistros{
 	
 	def nombreEmpresaConMayorGananciaEnAnios(anios:Int*) = 
 	  elements.maxBy(_.obtenerMontoGananciasTotalEnAnios(anios:_*)).nombre
+
+	def generarListaConNombresDeEmpresasConVentasPromedioTotalMayoresAEnAnios(monto:Int,anios:Int*) = 
+	  this.elements.filter(_.obtenerMontoVentasPromedioTotalEnAnios(anios:_*) > monto).map{_.nombre }  
 	
+	def nombreEmpresaConMayorGananciaPromedioEnAnios(anios:Int*) = 
+	  elements.maxBy(_.obtenerMontoGananciasPromedioTotalEnAnios(anios:_*)).nombre
 }

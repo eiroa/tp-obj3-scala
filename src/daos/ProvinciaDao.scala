@@ -57,5 +57,7 @@ class ProvinciaDao extends AbstractDao[Provincia]() {
     def generarMapaEmpresaMontoVentaTotalPorAnios(anios:Int*) = 
      this.elements.filter(_.tieneRegistrosEnAnios(anios:_*)).groupBy(_.obtenerMontoTotalVentasDeEmpresasSegunAnios(anios:_*))
 
-	
+   def generarMapaEmpresaMontoVentaPromedioTotalPorAnios(anios:Int*) = 
+     this.elements.filter(_.tieneRegistrosEnAnios(anios:_*)).groupBy(_.obtenerMontoTotalVentasPromedioDeEmpresasSegunAnios(anios:_*))	
+
 }

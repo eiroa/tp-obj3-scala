@@ -11,12 +11,28 @@ class Provincia(val nombre:String) extends EntidadConRegistros{
   
   def obtenerMontoTotalVentasDeEmpresasSegunAnio(anio:Int) = 
 	    this.registros.filter(_.anio.==(anio)).foldRight(0){(b:Registro,a:Int) =>   a + b.montoVentas }
-  
+
+   def obtenerMontoTotalPromedioVentasDeEmpresasSegunAnio(anio:Int) = {
+     if(this.tieneRegistrosEnAnio(anio)){
+       this.obtenerMontoTotalVentasDeEmpresasSegunAnio(anio)  / this.registrosDeAnio(anio).size
+     }else{
+       0
+     }
+   }
+	    
   
   def obtenerMontoTotalVentasDeEmpresasSegunAnios(anios:Int*) = {
 		var result = 0
 		for(anioActual <- anios){
 		  result = result +obtenerMontoTotalVentasDeEmpresasSegunAnio(anioActual)
+		}
+		result
+  }
+  
+ def obtenerMontoTotalVentasPromedioDeEmpresasSegunAnios(anios:Int*) = {
+		var result = 0
+		for(anioActual <- anios){
+		  result = result +obtenerMontoTotalPromedioVentasDeEmpresasSegunAnio(anioActual)
 		}
 		result
   }

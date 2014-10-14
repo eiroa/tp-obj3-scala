@@ -61,6 +61,8 @@ class RegistroDao extends AbstractDao[Registro] with EntidadConRegistros{
       result
     }
     
+
+    
     def registrosConGananciasMayoresAEnAnios(monto:Int, anios:Int*) = {
       var result:Int = 0
       for( anioActual <- anios ){

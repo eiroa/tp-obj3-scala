@@ -42,6 +42,30 @@ class Empresa(val nombre: String, val provincia:Provincia,
     
   }
   
+  def obtenerMontoVentasPromedioTotalEnAnios(anios:Int*)  =  {
+    var result = 0
+      for( anioActual <- anios ){
+         result = result + (this.obtenerMontoVentasEnAnio(anioActual))
+      }
+    result / anios.length   
+  }
+  
+  def obtenerMontoGananciasPromedioTotalEnAnios(anios:Int*)  =  {
+    var result = 0
+      for( anioActual <- anios ){
+         result = result + (this.obtenerMontoGananciasEnAnio(anioActual))
+      }
+    result / anios.length   
+  }
+  
+    def obtenerTasaDeGananciaPromedioTotalEnAnios(anios:Int*)  =  {
+    var result = 0
+      for( anioActual <- anios ){
+         result = result + (this.obtenerTasaDeGananciaEnAnio(anioActual))
+      }
+    result / anios.length   
+  }
+  
   def obtenerMontoGananciasTotalEnAnios(anios:Int*)  =  {
     var result = 0
       for( anioActual <- anios ){
@@ -62,6 +86,9 @@ class Empresa(val nombre: String, val provincia:Provincia,
   def obtenerMontoGananciasEnAnio(anio:Int) = 
     this.registros.filter(_.anio.==(anio)).
     foldRight(0){(b:Registro,a:Int) =>   a + b.montoGanancia  }
+  
+  def obtenerTasaDeGananciaEnAnio(anio:Int) = 
+    (this.obtenerMontoGananciasEnAnio(anio) * 100) / this.obtenerMontoVentasEnAnio(anio)
   
 	
   def esSolida():Boolean = this.obtenerTasaDeGanaciaTotal > 10
